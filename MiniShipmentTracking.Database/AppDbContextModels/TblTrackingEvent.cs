@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MiniShipmentTracking.Database.AppDbContextModels;
 
-public partial class TrackingEvent
+public partial class TblTrackingEvent
 {
     public int EventId { get; set; }
 
@@ -16,4 +16,6 @@ public partial class TrackingEvent
     public string? Description { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+
+    public int UpdatedByUserId { get; set; }
 }

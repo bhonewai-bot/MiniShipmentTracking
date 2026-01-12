@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher<TblUser>, PasswordHasher<TblUser>>();
+builder.Services.AddScoped<IShipmentService, ShipmentService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

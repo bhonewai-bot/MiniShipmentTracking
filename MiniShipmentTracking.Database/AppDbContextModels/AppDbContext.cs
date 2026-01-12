@@ -19,9 +19,13 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<TblShipment> TblShipments { get; set; }
 
+    public virtual DbSet<TblTrackingEvent> TblTrackingEvents { get; set; }
+
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
-    public virtual DbSet<TrackingEvent> TrackingEvents { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.;Database=ShipmentTracking;User ID=sa;Password=sasa@123;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -63,6 +67,25 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.TrackingNo)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblTrackingEvent>(entity =>
+        {
+            entity.HasKey(e => e.EventId).HasName("PK__Tracking__7944C8108D90682B");
+
+            entity.ToTable("Tbl_TrackingEvent");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Description).IsUnicode(false);
+            entity.Property(e => e.Location)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TblUser>(entity =>
@@ -86,24 +109,6 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Role)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<TrackingEvent>(entity =>
-        {
-            entity.HasKey(e => e.EventId).HasName("PK__Tracking__7944C8108D90682B");
-
-            entity.ToTable("TrackingEvent");
-
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Description).IsUnicode(false);
-            entity.Property(e => e.Location)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Status)
                 .HasMaxLength(20)
                 .IsUnicode(false);
         });
