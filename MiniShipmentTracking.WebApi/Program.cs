@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniShipmentTracking.Database.AppDbContextModels;
+using MiniShipmentTracking.WebApi.Middlewares;
 using MiniShipmentTracking.WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<AuthMiddleware>();
 
 app.UseAuthorization();
 
