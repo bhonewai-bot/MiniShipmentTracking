@@ -1,0 +1,6 @@
+@MiniShipmentTracking.WebApi_HostAddress = http://localhost:5115
+
+GET {{MiniShipmentTracking.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
