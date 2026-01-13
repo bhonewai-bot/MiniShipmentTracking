@@ -70,10 +70,11 @@ public class AuthMiddleware
         }
     }
 
-    private string[] _allowUrlList =
+    private readonly string[] _allowUrlList =
     {
         "/api/auth/register",
         "/api/auth/login",
+        "/api/shipment/track",
         "/swagger"
     };
     

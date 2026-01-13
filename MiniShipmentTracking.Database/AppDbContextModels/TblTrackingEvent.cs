@@ -18,4 +18,6 @@ public partial class TblTrackingEvent
     public DateTime? CreatedAt { get; set; }
 
     public int UpdatedByUserId { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
 }

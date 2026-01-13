@@ -13,10 +13,17 @@ public class ShipmentUpdateStatusRequestDto
     public string Description { get; set; }
 }
 
+public class TrackingEventUpdateRequestDto
+{
+    public ShipmentStatus? Status { get; set; }
+    public string? Location { get; set; }
+    public string? Description { get; set; }
+}
+
 public class ShipmentUpdateStatusResponseDto
 {
     public ShipmentResponseDto Shipment { get; set; }
-    public ShipmentTrackingEventResponseDto TrackingEvent { get; set; }
+    public TrackingEventResponseDto TrackingEvent { get; set; }
 }
 
 public class ShipmentResponseDto
@@ -29,7 +36,7 @@ public class ShipmentResponseDto
     public int UserId { get; set; }
 }
 
-public class ShipmentTrackingEventResponseDto
+public class TrackingEventResponseDto
 {
     
     public int EventId { get; set; }

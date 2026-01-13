@@ -33,23 +33,21 @@ public static class DevCode
         
         return roles.Contains(userRole);
     }
-}
 
-public static class ShipmentStateMachine
-{
-    private static readonly Dictionary<ShipmentStatus, ShipmentStatus[]> AllowedTransitions =
-        new()
-        {
-            { ShipmentStatus.Created, new[] { ShipmentStatus.PickedUp } },
-            { ShipmentStatus.PickedUp, new[] { ShipmentStatus.InTransit } },
-            { ShipmentStatus.InTransit, new[] { ShipmentStatus.OutForDelivery } },
-            { ShipmentStatus.OutForDelivery, new[] { ShipmentStatus.Delivered } },
-            { ShipmentStatus.Delivered, Array.Empty<ShipmentStatus>() }
-        };
-
-    public static bool CanTransition(ShipmentStatus current, ShipmentStatus next)
+    private static readonly Dictionary<ShipmentStatus, List<ShipmentStatus>> AllowedTransitions = new()
     {
-        return AllowedTransitions.TryGetValue(current, out var allowed)
-               && allowed.Contains(next);
+        { ShipmentStatus.Created, new List<ShipmentStatus>() { ShipmentStatus.PickedUp } },
+        { ShipmentStatus.PickedUp, new List<ShipmentStatus>() { ShipmentStatus.InTransit } },
+        { ShipmentStatus.InTransit, new List<ShipmentStatus>() { ShipmentStatus.OutForDelivery } },
+        { ShipmentStatus.OutForDelivery, new List<ShipmentStatus>() { ShipmentStatus.Delivered } },
+        { ShipmentStatus.Delivered, new List<ShipmentStatus>() }
+    };
+
+    public static bool IsValidTransition(ShipmentStatus currentStatus, ShipmentStatus nextStatus)
+    {
+        if (!AllowedTransitions.TryGetValue(currentStatus, out var transitions))
+            return false;
+        
+        return transitions.Contains(nextStatus);
     }
 }
